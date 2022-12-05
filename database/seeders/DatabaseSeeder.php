@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
             TypeSeeder::class,
             ProductSeeder::class,
             ReviewSeeder::class,
+            CartSeeder::class,
         ]);
 
         $file = new FileSystem;

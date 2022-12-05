@@ -4,6 +4,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\authe\ApiAuthController;
+use App\Http\Controllers\api\CartApiController;
 use App\Http\Controllers\api\CategoryApiController;
 use App\Http\Controllers\api\ProductApiController;
 use App\Http\Controllers\api\TypeApiController;
@@ -39,6 +40,11 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
     Route::post('/types',[TypeApiController::class,'store']);
     Route::put('/types/{id}',[TypeApiController::class,'update']);
     Route::delete('/types/{id}',[TypeApiController::class,'destroy']);
+
+    //cart
+    Route::get('/carts',[CartApiController::class,'index']);
+    Route::post('/carts',[TypeApiController::class,'store']);
+
 });
 
 Route::prefix('v1')->group(function(){
