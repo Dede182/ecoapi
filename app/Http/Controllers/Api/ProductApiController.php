@@ -32,7 +32,6 @@ class ProductApiController extends Controller
 
         return  response()->json([
             "message"=>"product is fetched successfully",
-
             "success" => true,
             'data' =>  ProductResource::collection($products),
             'meta' => [
@@ -57,9 +56,9 @@ class ProductApiController extends Controller
         $product = Product::where('id',$id)->first();
         if($product){
             return response()->json([
-                "message"=>"product is found",
-                "product" => $product,
-                "success" => true
+                "message"=>"product is fetched successfully",
+                "success" => true,
+                'data' =>  new ProductResource($product),
             ]);
         }
         return response()->json([

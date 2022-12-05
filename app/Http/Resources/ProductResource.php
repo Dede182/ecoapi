@@ -2,11 +2,13 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\Mono;
 use App\Models\Category;
 use App\Models\Type;
 use App\Models\User;
 use App\Policies\CategoryPolicy;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\App;
 
 class ProductResource extends JsonResource
 {
@@ -31,6 +33,7 @@ class ProductResource extends JsonResource
             'type' =>Type::where('id', $this->type_id)->first()->title,
             'user_id' => $this->user_id,
             'productimages' => ProductimageResource::collection($this->productimage),
+            "averageReview" =>$this->whenNotNull( Mono::review($this->id)),
             'reviews' => ReviewResource::collection($this->review),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
