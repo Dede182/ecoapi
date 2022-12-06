@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Type;
 use App\Models\Product;
+use App\Models\TownShip;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Database\Seeder;
 
@@ -23,25 +24,39 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
+        $this->call([
+            TownShipSeeder::class,
+        ]);
         \App\Models\User::factory()->create([
             'name' => 'hhz',
             'role'=>'admin',
             'email' => 'hhz@gmail.com',
-            'password' => Hash::make('asdffdsa')
+            'address' => "Insein,Somthing",
+            'phone' => "092131",
+            'pin' => "332",
+            'password' => Hash::make('asdffdsa'),
+            'town_ship_id' => TownShip::inRandomOrder()->first(),
         ]);
         \App\Models\User::factory()->create([
             'name' => 'example',
             'role'=> 'user',
             'email' => 'example@gmail.com',
-            'password' => Hash::make('asdffdsa')
+            'address' => "Insein,Somthing",
+            'phone' => "092131",
+            'pin' => "332",
+            'password' => Hash::make('asdffdsa'),
+            'town_ship_id' => TownShip::inRandomOrder()->first(),
         ]);
 
         $this->call([
+
             CategorySeeder::class,
             TypeSeeder::class,
             ProductSeeder::class,
             ReviewSeeder::class,
             CartSeeder::class,
+            OrderSeeder::class,
+            OrderItemSeeder::class,
         ]);
 
         $file = new FileSystem;

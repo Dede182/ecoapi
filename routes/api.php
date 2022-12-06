@@ -44,6 +44,10 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
     //cart
     Route::get('/carts',[CartApiController::class,'index']);
     Route::post('/carts',[CartApiController::class,'store']);
+    Route::delete('/carts',[CartApiController::class,'destroy']);
+
+    // order
+
 
 });
 

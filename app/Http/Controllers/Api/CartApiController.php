@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CartResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +23,7 @@ class CartApiController extends Controller
         return response()->json([
             "message"=>"product is fetched successfully",
             "success" => true,
-            'carts' =>  $carts,
+            'carts' =>  ProductResource::collection($carts),
         ]);
     }
 
@@ -33,6 +35,9 @@ class CartApiController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'product_id' => 'unique:carts,product_id'
+        ]);
         $cart = new Cart();
         $cart->user_id = Auth::user()->id;
         $cart->product_id = $request->product_id;
@@ -75,6 +80,12 @@ class CartApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cartPorudctId = Cart::where('product_id',$id)->first();
+        $cartPorudctId->delete();
+        return response()->json([
+            "message"=>"product is removed from  cart",
+            "success" => true,
+            'cart' =>  $cartPorudctId,
+        ]);
     }
 }
