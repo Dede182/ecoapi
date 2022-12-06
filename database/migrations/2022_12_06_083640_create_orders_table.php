@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('deliveryOption',['SDO','FDO'])->nullable();
             $table->string('payment')->nullable();
             $table->enum('status',['Delivered','Pending','Cancelled'])->default('Pending');
+            $table->integer('total')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('town_ship_id')->constrained()->cascadeOnDelete();
             $table->integer('admin_id');

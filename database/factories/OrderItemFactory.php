@@ -18,10 +18,13 @@ class OrderItemFactory extends Factory
      */
     public function definition()
     {
+        $product = Product::inRandomOrder()->first();
+        $amount =fake()->numberBetween($min = 1, $max = 10);
         return [
-           'product_id' => Product::inRandomOrder()->first(),
+           'product_id' =>$product,
            'order_id' => Order::inRandomOrder()->first(),
-           'quantity' => fake()->numberBetween($min = 1, $max = 10)
+           'amount' => $amount,
+           'cost' => $product->price * $amount,
         ];
     }
 }

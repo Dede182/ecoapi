@@ -80,6 +80,7 @@ class CartApiController extends Controller
      */
     public function destroy($id)
     {
+        // return $id;
         $cartPorudctId = Cart::where('product_id',$id)->first();
         $cartPorudctId->delete();
         return response()->json([

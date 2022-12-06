@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\authe\ApiAuthController;
 use App\Http\Controllers\api\CartApiController;
 use App\Http\Controllers\api\CategoryApiController;
+use App\Http\Controllers\api\OrderApiController;
 use App\Http\Controllers\api\ProductApiController;
 use App\Http\Controllers\api\TypeApiController;
 
@@ -44,10 +45,12 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
     //cart
     Route::get('/carts',[CartApiController::class,'index']);
     Route::post('/carts',[CartApiController::class,'store']);
-    Route::delete('/carts',[CartApiController::class,'destroy']);
+    Route::delete('/carts/{id}',[CartApiController::class,'destroy']);
 
     // order
-
+    Route::get('/orders',[OrderApiController::class,'index']);
+    Route::post('/orders',[OrderApiController::class,'store']);
+    Route::delete('/orders/{id}',[OrderApiController::class,'destroy']);
 
 });
 
