@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Helpers\Mono;
 use App\Models\Category;
+use App\Models\ProductImage;
 use App\Models\Type;
 use App\Models\User;
 use App\Policies\CategoryPolicy;
@@ -18,6 +19,17 @@ class ProductResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+
+     public function productImage($image){
+        if(count($image)>0){
+            $image= ProductimageResource::collection($image);
+        }
+        else{
+            $image = "https://sneakernews.com/wp-content/uploads/2020/02/air-jordan-34-shroud-CU1548-001-3.jpg";
+        }
+        return $image;
+     }
+
     public function toArray($request)
     {
         return [
@@ -32,7 +44,7 @@ class ProductResource extends JsonResource
             'category' =>Category::where('id', $this->category_id)->first()->title,
             'type' =>Type::where('id', $this->type_id)->first()->title,
             'user_id' => $this->user_id,
-            'productimages' => ProductimageResource::collection($this->productimage),
+            'productImage' => $this->productImage($this->productimage),
             "averageReview" =>$this->whenNotNull( Mono::review($this->id)),
             'reviews' => ReviewResource::collection($this->review),
             'created_at' => $this->created_at,

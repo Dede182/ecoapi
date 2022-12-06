@@ -43,7 +43,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
 
     //cart
     Route::get('/carts',[CartApiController::class,'index']);
-    Route::post('/carts',[TypeApiController::class,'store']);
+    Route::post('/carts',[CartApiController::class,'store']);
 
 });
 

@@ -33,7 +33,15 @@ class CartApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cart = new Cart();
+        $cart->user_id = Auth::user()->id;
+        $cart->product_id = $request->product_id;
+        $cart->save();
+        return response()->json([
+            "message"=>"product is added to cart",
+            "success" => true,
+            'cart' =>  $cart,
+        ]);
     }
 
     /**
