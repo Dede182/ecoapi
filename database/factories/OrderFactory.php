@@ -25,9 +25,9 @@ class OrderFactory extends Factory
             'deliveryOption' => fake()->randomElement(['SDO',"FDO"]),
             'payment' => fake()->randomElement(['CDO','Paypal','Amazon']),
             'status' => fake()->randomElement(['Delivered','Pending','Cancelled']),
-            'user_id' => Auth::user()->id,
-            'town_ship_id' => Auth::user()->town_ship_id,
-            'admin_id' => User::where('role','admin')->first()->id,
+            'user_id' => User::inRandomOrder()->first(),
+            'town_ship_id' => User::inRandomOrder()->first()->town_ship_id,
+            'admin_id' => User::where('role','admin')->first(),
         ];
     }
 }
