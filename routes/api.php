@@ -55,9 +55,11 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
     Route::put('/orders/{id}',[OrderApiController::class,'update']);
 
 
+});
+
+Route::prefix('v1')->middleware('auth:sanctum','isAdmin')->group(function(){
     Route::get('/users/{id}/orders',[UserOrdersController::class,'index']);
     Route::get('/orders/township',[UserOrdersController::class,'township']);
-
 });
 
 Route::prefix('v1')->group(function(){

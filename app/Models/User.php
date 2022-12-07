@@ -35,7 +35,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be cast.
-     *
+    *
      * @var array<string, string>
      */
     protected $casts = [
@@ -45,5 +45,9 @@ class User extends Authenticatable
 
     public function orders(){
         return $this->hasMany(Order::class);
+    }
+
+    public function isAdmin(){
+        return $this->role === "admin";
     }
 }

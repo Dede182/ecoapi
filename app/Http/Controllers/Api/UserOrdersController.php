@@ -7,6 +7,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Models\TownShip;
 
 class UserOrdersController extends Controller
 {
@@ -23,7 +24,12 @@ class UserOrdersController extends Controller
     }
 
     public function township(){
-        $orders = Order::where("town_ship_id",2)->pluck('town_ship_id');
-        return $orders;
+        $townships = TownShip::pluck('name');
+        $orders = Order::where("town_ship_id",3)->pluck('town_ship_id');
+        $OT = [];
+        foreach($townships as $key=>$township){
+            $OT[$township] = count(Order::where("town_ship_id",($key+1))->pluck('town_ship_id'));
+        }
+        return $OT;
     }
 }
