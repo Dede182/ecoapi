@@ -22,7 +22,7 @@ class OrderApiController extends Controller
     {
         $orders = Order::where('user_id',Auth::user()->id)->paginate(10)->withQueryString();
         return  response()->json([
-            "message"=>"product is fetched successfully",
+            "message"=>"orders were fetched successfully",
             "success" => true,
             'data' =>  OrderResource::collection($orders),
             'meta' => [
@@ -61,15 +61,15 @@ class OrderApiController extends Controller
             $orderitem = new OrderItem();
             $orderitem->product_id = $pro;
             $orderitem->order_id = $order->id;
-            $orderitem->amount = $request->amount;
-            $orderitem->cost = $order->amount * Product::where('id',$pro)->first()->price;
+            $orderitem->amount = $request->amount[$key];
+            $orderitem->cost = $orderitem->amount * Product::where('id',$pro)->first()->price;
             $orderitem->save();
 
         }
         return response()->json([
-            "message"=>"product is fetched successfully",
+            "message"=>"order was created successfully",
             "success" => true,
-            'data' =>  $order,
+            'data' =>  new OrderResource($order),
         ]);
     }
 
@@ -93,7 +93,16 @@ class OrderApiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::where('id',$id)->first();
+        $order->deliveryOption  = $request->deliveryOption;
+        $order->payment = $request->payment;
+        $order->update();
+
+        return response()->json([
+            "message"=>"order was updated successfully",
+            "success" => true,
+            'data' =>  new OrderResource($order),
+        ]);
     }
 
     /**
@@ -104,6 +113,11 @@ class OrderApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = Order::where('id',$id)->first();
+        $order->delete();
+        return response()->json([
+            "message"=>"order was deleted successfully",
+            "success" => true,
+        ]);
     }
 }

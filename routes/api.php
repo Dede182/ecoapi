@@ -9,6 +9,7 @@ use App\Http\Controllers\api\CategoryApiController;
 use App\Http\Controllers\api\OrderApiController;
 use App\Http\Controllers\api\ProductApiController;
 use App\Http\Controllers\api\TypeApiController;
+use App\Http\Controllers\api\UserOrdersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,11 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
     Route::get('/orders',[OrderApiController::class,'index']);
     Route::post('/orders',[OrderApiController::class,'store']);
     Route::delete('/orders/{id}',[OrderApiController::class,'destroy']);
+    Route::put('/orders/{id}',[OrderApiController::class,'update']);
+
+
+    Route::get('/users/{id}/orders',[UserOrdersController::class,'index']);
+    Route::get('/orders/township',[UserOrdersController::class,'township']);
 
 });
 
