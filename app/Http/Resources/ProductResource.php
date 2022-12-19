@@ -47,7 +47,7 @@ class ProductResource extends JsonResource
             'productImage' => $this->productImage($this->productimage),
             "averageReview" =>$this->whenNotNull( Mono::review($this->id)),
             'reviews' => ReviewResource::collection($this->review),
-            'created_at' => $this->created_at,
+            'created_at' => $this->created_at->format('M d ,Y'),
             'updated_at' => $this->updated_at,
         ];
     }

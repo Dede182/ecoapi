@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string("profileImage")->nullable();
             $table->enum('role',['user','admin'])->default('user');
             $table->string('address')->nullable();
             $table->integer('phone')->nullable();
             $table->integer('pin')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('town_ship_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('town_ship_id')->nullable()->constrained()->cascadeOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

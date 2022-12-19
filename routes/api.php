@@ -2,14 +2,16 @@
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\authe\ApiAuthController;
 use App\Http\Controllers\api\CartApiController;
-use App\Http\Controllers\api\CategoryApiController;
+use App\Http\Controllers\api\TypeApiController;
 use App\Http\Controllers\api\OrderApiController;
 use App\Http\Controllers\api\ProductApiController;
-use App\Http\Controllers\api\TypeApiController;
 use App\Http\Controllers\api\UserOrdersController;
+use App\Http\Controllers\api\CategoryApiController;
+use App\Http\Controllers\api\authe\ApiAuthController;
+use App\Http\Resources\UserResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +27,7 @@ use App\Http\Controllers\api\UserOrdersController;
 Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
     Route::post('/logout',[ApiAuthController::class,'logout'])->name('api.logout');
     // products
-    Route::get('/products',[ProductApiController::class,'index']);
-    Route::post('/products',[ProductApiController::class,'store']);
+
     Route::put('/products/{id}',[ProductApiController::class,'update']);
     Route::delete('/products/{id}',[ProductApiController::class,'destory']);
     Route::get('/products/{id}',[ProductApiController::class,'show']);
@@ -54,6 +55,10 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function(){
     Route::delete('/orders/{id}',[OrderApiController::class,'destroy']);
     Route::put('/orders/{id}',[OrderApiController::class,'update']);
 
+    // profile
+    Route::get('/profile',function(){
+        return new UserResource(Auth::user());
+    });
 
 });
 
@@ -65,4 +70,6 @@ Route::prefix('v1')->middleware('auth:sanctum','isAdmin')->group(function(){
 Route::prefix('v1')->group(function(){
     Route::post('/register',[ApiAuthController::class,'register'])->name('api.register');
     Route::post('/login',[ApiAuthController::class,'login'])->name('api.login');
+    Route::get('/products',[ProductApiController::class,'index']);
+    Route::post('/products',[ProductApiController::class,'store']);
 });

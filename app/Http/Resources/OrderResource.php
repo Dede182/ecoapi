@@ -22,7 +22,7 @@ class OrderResource extends JsonResource
             'deliveryOption' => $this->deliveryOption,
             'payment' => $this->payment,
             'status' => $this->status,
-            'user_id' => $this->user_id,
+            'orderer' => new UserResource(User::where('id',$this->user_id)->first()),
             'townShip' => TownShip::where('id',$this->town_ship_id)->first()->name,
             'owner' => User::where('id',$this->admin_id)->first()->name,
             'total' => $this->orderitems->sum('cost'),

@@ -20,7 +20,10 @@ class OrderApiController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('user_id',Auth::user()->id)->paginate(10)->withQueryString();
+        $orders = Order::
+        when(Auth::user()->isAdmin(),fn($q)=>$q->latest('id'))
+        ->when(Auth::user()->isUser(),fn($q)=>$q->where('user_id',Auth::user()->id))
+        ->paginate(10)->withQueryString();
         return  response()->json([
             "message"=>"orders were fetched successfully",
             "success" => true,
